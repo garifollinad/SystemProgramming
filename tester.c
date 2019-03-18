@@ -10,8 +10,6 @@
 int test1(void);
 int test2(void);
 int test3(void);
-int test4(void);
-int test5(void);
 
 int main(int argc, char** argv) {
 
