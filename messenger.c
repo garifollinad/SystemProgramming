@@ -10,13 +10,17 @@ struct _ptr_msg{
   int len;
   char* message;
 };
-
+unsigned long flags;
 static ptr_msg *bottom = NULL;
 static ptr_msg *top = NULL;
 
 int msg_insert( char *buffer, int len ) {
-
    ptr_msg* msg = kmalloc(sizeof(ptr_msg), GFP_KERNEL);
+
+   if (!msg) {
+    local_irq_restore(flags);
+    return(-15);
+  }
 
   msg->previous = NULL;
   msg->len = len;
@@ -43,6 +47,11 @@ int msg_get( char* buffer, int len ) {
     ptr_msg* msg = top;
     int nLen = msg->len;
     top = msg->previous;
+
+    if(buffer == NULL){
+    local_irq_restore(flags);
+    return(-21);
+  }
 
     printk(msg->message);
 
