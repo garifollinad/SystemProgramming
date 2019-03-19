@@ -14,7 +14,7 @@ unsigned long flags;
 static ptr_msg *bottom = NULL;
 static ptr_msg *top = NULL;
 
-int msg_insert( char *buffer, int len ) {
+asmlinkage int msg_insert( char *buffer, int len ) {
    ptr_msg* msg = kmalloc(sizeof(ptr_msg), GFP_KERNEL);
 
    if (!msg) {
@@ -41,7 +41,7 @@ int msg_insert( char *buffer, int len ) {
   return 0;
 }
 
-int msg_get( char* buffer, int len ) {
+asmlinkage int msg_get( char* buffer, int len ) {
 
   if (top != NULL) {
     ptr_msg* msg = top;
